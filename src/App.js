@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout } from 'antd';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import 'antd/dist/antd.css';
+
+import './App.scss';
+
+import Requests from './components/Requests';
+import NavigationSidebar from 'components/Navigation/Sidebar';
+import NavigationHeader from 'components/Navigation/Header';
+
+const { Content } = Layout;
+
+const App = () => {
+	return (
+		<div className="App">
+			<Layout style={{ minHeight: '100vh' }}>
+				<NavigationSidebar />
+				<Layout>
+					<Content style={{ background: 'white' }}>
+						<NavigationHeader />
+						<div className="site-layout-content">
+							<Requests />
+						</div>
+					</Content>
+				</Layout>
+			</Layout>
+		</div>
+	);
+};
 
 export default App;

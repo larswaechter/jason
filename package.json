@@ -1,34 +1,54 @@
 {
-  "name": "fetcher",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+	"name": "jason",
+	"description": "Hit your JSON APIs with ease",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@material-ui/core": "^4.9.9",
+		"@material-ui/icons": "^4.9.1",
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.3.2",
+		"@testing-library/user-event": "^7.1.2",
+		"ace-builds": "^1.4.9",
+		"antd": "^4.1.1",
+		"axios": "^0.19.2",
+		"js-beautify": "^1.11.0",
+		"node-sass": "^4.13.1",
+		"prismjs": "^1.20.0",
+		"react": "^16.13.1",
+		"react-ace": "^8.1.0",
+		"react-dom": "^16.13.1",
+		"react-json-view": "^1.19.1",
+		"react-scripts": "3.4.1"
+	},
+	"main": "src/electron.js",
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"build-babel": "babel",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"electron": "electron ."
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"electron": "^8.2.0",
+		"eslint-config-prettier": "^6.10.1",
+		"eslint-plugin-react": "^7.19.0",
+		"prettier": "^2.0.4"
+	}
 }
