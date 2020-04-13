@@ -29,7 +29,11 @@ const Response = (props) => {
 		return (
 			<div>
 				{title}
-				<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No response data" />
+				<Empty
+					image={Empty.PRESENTED_IMAGE_SIMPLE}
+					description="No response data"
+					style={{ margin: 48 }}
+				/>
 			</div>
 		);
 	}

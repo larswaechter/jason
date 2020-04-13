@@ -19,7 +19,11 @@ const RequestTabsBody = (props) => {
 
 	return (
 		<div className="RequestTabsBody">
-			<Radio.Group value={type} onChange={handleRadioChange} style={{ marginBottom: '12px' }}>
+			<Radio.Group
+				value={type}
+				onChange={handleRadioChange}
+				style={{ marginBottom: type !== 'empty' ? 12 : 0 }}
+			>
 				<Radio value="empty">Empty</Radio>
 				<Radio value="form">Form</Radio>
 				<Radio value="json">JSON</Radio>

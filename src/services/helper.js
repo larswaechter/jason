@@ -21,7 +21,16 @@ export class Helper {
 		return {
 			url: request.url || '',
 			method: request.method || 'get',
-			headers: request.headers || {},
+			headers: request.headers || {
+				'Cache-Control': {
+					value: 'no-cache',
+					description: 'Prevent cached reponses for duplicated requests'
+				},
+				Connection: {
+					value: 'keep-alive',
+					description: 'Keep connection open'
+				}
+			},
 			params: request.params || {},
 			data: request.data || { type: 'none', value: undefined },
 			timeout: request.timeout >= 0 ? request.timeout : 0

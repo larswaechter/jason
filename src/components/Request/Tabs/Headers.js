@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import { Table, Input, Button, Popconfirm, Form, Dropdown, Menu } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 const EditableContext = React.createContext();
@@ -160,12 +160,12 @@ class RequestTabsHeaders extends React.Component {
 		});
 	};
 
-	handleAdd = () => {
+	handleAdd = (header = {}) => {
 		const { count, dataSource } = this.state;
 
 		const newData = {
 			id: dataSource.length,
-			key: '-',
+			key: header.key || '-',
 			value: '-',
 			description: '-'
 		};
@@ -232,17 +232,25 @@ class RequestTabsHeaders extends React.Component {
 				})
 			};
 		});
+
+		const btnMenu = (
+			<Menu
+				onClick={({ key }) => {
+					this.handleAdd({ key });
+				}}
+			>
+				<Menu.Item key="Authorization">Authorization</Menu.Item>
+				<Menu.Item key="Content-Type">Content-Type</Menu.Item>
+			</Menu>
+		);
+
 		return (
 			<div className="RequestTabsHeaders">
-				<Button
-					onClick={this.handleAdd}
-					type="primary"
-					style={{
-						marginBottom: 16
-					}}
-				>
+				<Dropdown.Button overlay={btnMenu} style={{ marginBottom: 16 }} onClick={this.handleAdd}>
 					<PlusOutlined />
-				</Button>
+					Header
+				</Dropdown.Button>
+
 				<Table
 					components={components}
 					rowClassName={() => 'editable-row'}

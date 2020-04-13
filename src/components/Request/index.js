@@ -98,7 +98,7 @@ class Request extends Component {
 			let newResponse = Helper.createEmptyResponse({ startTime });
 
 			axios
-				.fetchData(request)
+				.sendRequest(request)
 				.then((res) => {
 					newResponse = {
 						...newResponse,

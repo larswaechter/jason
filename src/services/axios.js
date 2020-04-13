@@ -5,7 +5,8 @@ export class AxiosService {
 		this.axios = create();
 	}
 
-	transformRequest(data, headers) {
+	// Transform request body data
+	transformRequest(data) {
 		const { type, value } = data;
 
 		if (!value) {
@@ -30,8 +31,9 @@ export class AxiosService {
 		}
 	}
 
-	fetchData(request) {
+	sendRequest(request) {
 		const { url, method, params, data, headers } = request;
+		const { type, value } = data;
 
 		const paramsPrepared = {};
 		for (let param in params) {
@@ -43,6 +45,22 @@ export class AxiosService {
 			headersPrepared[header] = headers[header].value;
 		}
 
+		// Set Content-Type header if not provided by user
+		if (type !== 'empty' && !headersPrepared['Content-Type'] && value) {
+			switch (type) {
+				case 'form':
+					headersPrepared['Content-Type'] = 'multipart/form-data;boundary="boundary"';
+					break;
+				case 'json':
+					headersPrepared['Content-Type'] = 'application/json';
+					break;
+				case 'plain':
+					headersPrepared['Content-Type'] = 'text/plain; charset=UTF-8';
+					break;
+			}
+		}
+
+		// Send request
 		return this.axios
 			.request({
 				method,
@@ -53,8 +71,6 @@ export class AxiosService {
 				validateStatus: () => true, // Prevent error throwing
 				transformRequest: this.transformRequest
 			})
-			.then((res) => {
-				return res;
-			});
+			.then((res) => res);
 	}
 }
