@@ -1,4 +1,5 @@
 import beautify from 'js-beautify';
+import { v4 as uuid } from 'uuid';
 
 export class Helper {
 	static validateRequest = (request) => {
@@ -11,6 +12,7 @@ export class Helper {
 
 	static createEmptyMetadata = (metadata = {}) => {
 		return {
+			uuid: uuid(),
 			title: metadata.title || 'Untitled request',
 			createdAt: metadata.createdAt || Date.now(),
 			completed: metadata.completed || false

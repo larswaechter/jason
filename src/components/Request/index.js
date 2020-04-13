@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Divider, message } from 'antd';
+import { v4 as uuid } from 'uuid';
 
 import { AxiosService } from '../../services/axios';
 import { Helper } from '../../services/helper';
@@ -140,11 +141,12 @@ class Request extends Component {
 	};
 
 	cloneRequest = () => {
-		this.props.addRequest(this.state);
+		this.props.addRequest({ ...this.state, metadata: { ...this.state.metadata, uuid: uuid() } });
 	};
 
 	render() {
 		const { metadata, request, response, isLoading } = this.state;
+		const requestMerged = { metadata, request, response };
 
 		return (
 			<div className="Request">
@@ -155,7 +157,7 @@ class Request extends Component {
 					isLoading={isLoading}
 				/>
 
-				<RequestActions cloneRequest={this.cloneRequest} />
+				<RequestActions requestMerged={requestMerged} cloneRequest={this.cloneRequest} />
 
 				<Divider />
 

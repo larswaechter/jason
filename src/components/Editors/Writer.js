@@ -16,7 +16,7 @@ const EditorsWriter = (props) => {
 
 	const [content, setContent] = useState(Helper.prettyPrint(code, language));
 
-	const placeholder = language === 'form' ? 'key=value' : 'Body';
+	const placeholder = language === 'form' ? 'name=value\nname2=value2' : 'Body';
 
 	return (
 		<div className="EditorsWriter">
