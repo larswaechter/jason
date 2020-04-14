@@ -20,7 +20,7 @@
 		"react-scripts": "3.4.1",
 		"uuid": "^7.0.3"
 	},
-	"main": "src/electron.js",
+	"main": "src/main/electron.js",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",

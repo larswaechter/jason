@@ -1,9 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path');
-const { writeFile } = require('fs');
-
-const { create } = require('axios');
+const { app, BrowserWindow } = require('electron');
 
 function createWindow() {
 	// Create the browser window.
@@ -15,12 +11,6 @@ function createWindow() {
 		}
 	});
 
-	const tmp = create();
-
-	tmp.get('https://jsonplaceholder.typicode.com/users').then((res) => {
-		console.log(res);
-	});
-
 	mainWindow.setMenuBarVisibility(false);
 
 	// and load the index.html of the app.
@@ -29,17 +19,6 @@ function createWindow() {
 	mainWindow.maximize();
 
 	mainWindow.dark;
-
-	ipcMain.on('export-request', (event, { request }) => {
-		const downloadPath = app.getPath('downloads');
-		const fileName = 'jason_' + request.metadata.uuid + '.json';
-
-		writeFile(path.join(downloadPath, fileName), JSON.stringify(request, null, 2), (err) => {
-			return event.sender.send(`export-request-response-${request.metadata.uuid}`, {
-				success: err ? false : true
-			});
-		});
-	});
 
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools()

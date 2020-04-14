@@ -1,26 +1,31 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Tooltip, Space, message } from 'antd';
 import { CopyOutlined, DownloadOutlined, HeartOutlined, UploadOutlined } from '@ant-design/icons';
 
-const { ipcRenderer } = window.require('electron');
+const remote = window.require('electron').remote.require('./remote');
 
 const RequestActions = (props) => {
-	const { requestMerged, cloneRequest } = props;
-	const { metadata, request } = requestMerged;
-	const { uuid } = metadata;
+	const { requestMerged, importRequest, cloneRequest } = props;
 
-	useEffect(() => {
-		ipcRenderer.on(`export-request-response-${uuid}`, (event, { success }) => {
-			if (success) {
-				message.success('Request exported!');
+	const handleImport = () => {
+		remote.importRequest((err, request) => {
+			if (err) {
+				message.error(err.message);
 			} else {
-				message.error('Failed to export request!');
+				importRequest(request);
+				message.success('Request imported!');
 			}
 		});
-	}, []);
+	};
 
 	const handleExport = () => {
-		ipcRenderer.send('export-request', { request: requestMerged });
+		remote.exportRequest({ request: requestMerged }, (err) => {
+			if (err) {
+				message.error(err.message);
+			} else {
+				message.success('Request exported!');
+			}
+		});
 	};
 
 	return (
@@ -32,14 +37,14 @@ const RequestActions = (props) => {
 				<Button type="default" icon={<HeartOutlined />}>
 					Save
 				</Button>
+				<Tooltip title="Import request from file">
+					<Button type="default" icon={<UploadOutlined />} onClick={handleImport}>
+						Import
+					</Button>
+				</Tooltip>
 				<Tooltip title="Export request to file">
 					<Button type="default" icon={<DownloadOutlined />} onClick={handleExport}>
 						Export
-					</Button>
-				</Tooltip>
-				<Tooltip title="Import request from file">
-					<Button type="default" icon={<UploadOutlined />}>
-						Import
 					</Button>
 				</Tooltip>
 			</Space>

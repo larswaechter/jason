@@ -144,6 +144,12 @@ class Request extends Component {
 		this.props.addRequest({ ...this.state, metadata: { ...this.state.metadata, uuid: uuid() } });
 	};
 
+	importRequest = (request) => {
+		console.log(request);
+
+		this.setState({ ...request });
+	};
+
 	render() {
 		const { metadata, request, response, isLoading } = this.state;
 		const requestMerged = { metadata, request, response };
@@ -157,7 +163,11 @@ class Request extends Component {
 					isLoading={isLoading}
 				/>
 
-				<RequestActions requestMerged={requestMerged} cloneRequest={this.cloneRequest} />
+				<RequestActions
+					requestMerged={requestMerged}
+					importRequest={this.importRequest}
+					cloneRequest={this.cloneRequest}
+				/>
 
 				<Divider />
 
