@@ -1,5 +1,10 @@
-// Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron');
+const Store = require('electron-store');
+
+const electronStore = new Store({
+	name: 'jason'
+});
+global.electronStore = electronStore;
 
 function createWindow() {
 	// Create the browser window.
@@ -7,7 +12,8 @@ function createWindow() {
 		width: 800,
 		height: 600,
 		webPreferences: {
-			nodeIntegration: true
+			nodeIntegration: true,
+			webSecurity: false // Allow CORS
 		}
 	});
 
@@ -19,6 +25,9 @@ function createWindow() {
 	mainWindow.maximize();
 
 	mainWindow.dark;
+
+	// Register IPC
+	require('./ipc');
 
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools()

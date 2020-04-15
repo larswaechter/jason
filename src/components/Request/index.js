@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 import { AxiosService } from '../../services/axios';
 import { Helper } from '../../services/helper';
+import { appendRequestHistory } from '../../utils/electron.api';
 
 import Response from '../Response/';
 
@@ -128,14 +129,20 @@ class Request extends Component {
 						message.success(`Request finished in ${duration} ms!`);
 					}
 
-					this.setState({
-						isLoading: false,
-						metadata: {
-							...metadata,
-							completed: true
+					this.setState(
+						{
+							isLoading: false,
+							metadata: {
+								...metadata,
+								completed: true
+							},
+							response: newResponse
 						},
-						response: newResponse
-					});
+						() => {
+							const { metadata, request, response } = this.state;
+							appendRequestHistory({ metadata, request, response });
+						}
+					);
 				});
 		});
 	};

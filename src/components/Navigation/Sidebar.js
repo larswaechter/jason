@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import { HeartOutlined, HistoryOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { getRequestsHistory } from '../../utils/electron.api';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
+const { ipcRenderer } = window.require('electron');
+
 const NavigationSidebar = () => {
 	const [collapsed, setCollapsed] = useState(false);
+	const [savedRequests, setSavedRequests] = useState([]);
+	const [requestsHistory, setRequestsHistory] = useState(getRequestsHistory());
 
 	const toggleCollapsed = (isCollapsed) => {
 		setCollapsed(isCollapsed);
 	};
+
+	useEffect(() => {
+		ipcRenderer.once('save-request-response', (event, { request }) => {
+			const requests = savedRequests.slice();
+			requests.unshift(request);
+			setSavedRequests(requests);
+		});
+	}, [savedRequests]);
 
 	return (
 		<Sider collapsible collapsed={collapsed} onCollapse={toggleCollapsed} theme="dark">
@@ -32,10 +44,9 @@ const NavigationSidebar = () => {
 						</span>
 					}
 				>
-					<Menu.Item key="1">option1</Menu.Item>
-					<Menu.Item key="2">option2</Menu.Item>
-					<Menu.Item key="3">option3</Menu.Item>
-					<Menu.Item key="4">option4</Menu.Item>
+					{savedRequests.map((request, i) => (
+						<Menu.Item key={i}>{request.metadata.title}</Menu.Item>
+					))}
 				</SubMenu>
 				<SubMenu
 					key="sub2"
@@ -46,10 +57,9 @@ const NavigationSidebar = () => {
 						</span>
 					}
 				>
-					<Menu.Item key="5">option5</Menu.Item>
-					<Menu.Item key="6">option6</Menu.Item>
-					<Menu.Item key="7">option7</Menu.Item>
-					<Menu.Item key="8">option8</Menu.Item>
+					{requestsHistory.map((request, i) => (
+						<Menu.Item key={i + savedRequests.length}>{request.metadata.title}</Menu.Item>
+					))}
 				</SubMenu>
 				<SubMenu
 					key="sub3"
