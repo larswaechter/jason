@@ -1,19 +1,19 @@
 import React from 'react';
-import { Form, Button, Input, Select, Row, Col, Space } from 'antd';
+import { Form, Button, Input, Select, Row, Col } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
 const RequestUrl = (props) => {
-	const { request, updateRequestKey, sendRequest, isLoading } = props;
-	const { url, method } = request;
+	const { context, updateRequestContext, sendRequest, isLoading } = props;
+	const { url, method } = context;
 
 	const handleMethodChange = (method) => {
-		updateRequestKey('method', method);
+		updateRequestContext('method', method);
 	};
 
 	const handleUrlChange = (e) => {
-		updateRequestKey('url', e.target.value);
+		updateRequestContext('url', e.target.value);
 	};
 
 	const addonMethods = (

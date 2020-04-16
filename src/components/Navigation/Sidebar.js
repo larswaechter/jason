@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { Layout, Menu } from 'antd';
 import { HeartOutlined, HistoryOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { getRequestsHistory } from '../../utils/electron.api';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const { ipcRenderer } = window.require('electron');
 
-const NavigationSidebar = () => {
+const NavigationSidebar = (props) => {
+	const { history, addRequest } = props;
+
+	console.log(history);
+
 	const [collapsed, setCollapsed] = useState(false);
 	const [savedRequests, setSavedRequests] = useState([]);
-	const [requestsHistory, setRequestsHistory] = useState(getRequestsHistory());
 
 	const toggleCollapsed = (isCollapsed) => {
 		setCollapsed(isCollapsed);
@@ -34,7 +37,7 @@ const NavigationSidebar = () => {
 					margin: '16px'
 				}}
 			/>
-			<Menu mode="inline" theme="dark">
+			<Menu mode="inline" theme="dark" selectable={false}>
 				<SubMenu
 					key="sub1"
 					title={
@@ -57,8 +60,17 @@ const NavigationSidebar = () => {
 						</span>
 					}
 				>
-					{requestsHistory.map((request, i) => (
-						<Menu.Item key={i + savedRequests.length}>{request.metadata.title}</Menu.Item>
+					{history.map((request, i) => (
+						<Menu.Item
+							key={i + savedRequests.length}
+							onClick={() => {
+								addRequest(history[i]);
+							}}
+						>
+							{`${request.context.method.toUpperCase()} - ${moment(
+								request.response.startTime
+							).format('h:mm:ss a')}`}
+						</Menu.Item>
 					))}
 				</SubMenu>
 				<SubMenu

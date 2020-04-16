@@ -4,17 +4,17 @@ import { Radio, Input } from 'antd';
 import EditorsWriter from 'components/Editors/Writer';
 
 const RequestTabsBody = (props) => {
-	const { request, updateRequestKey } = props;
+	const { context, updateRequestContext } = props;
 
 	const [type, setType] = useState('empty');
 
 	const handleRadioChange = (e) => {
 		setType(e.target.value);
-		updateRequestKey('data', { ...request.data, type: e.target.value });
+		updateRequestContext('data', { ...context.data, type: e.target.value });
 	};
 
 	const handleEditorChange = (value) => {
-		updateRequestKey('data', { ...request.data, value });
+		updateRequestContext('data', { ...context.data, value });
 	};
 
 	return (

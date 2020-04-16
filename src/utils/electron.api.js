@@ -24,7 +24,7 @@ export const appendRequestHistory = (request) => {
 		history.pop();
 		history.unshift(request);
 	} else {
-		history.push(request);
+		history.unshift(request);
 	}
 
 	return setRequestHistory(history);

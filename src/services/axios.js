@@ -31,8 +31,8 @@ export class AxiosService {
 		}
 	}
 
-	sendRequest(request) {
-		const { url, method, params, data, headers } = request;
+	sendRequest(context) {
+		const { url, method, params, data, headers } = context;
 		const { type, value } = data;
 
 		const paramsPrepared = {};

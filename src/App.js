@@ -5,8 +5,8 @@ import 'antd/dist/antd.css';
 
 import './App.scss';
 
-import Requests from './components/Requests';
-import NavigationSidebar from 'components/Navigation/Sidebar';
+import Requests from './containers/Requests';
+import NavigationSidebar from './containers/Sidebar';
 import NavigationHeader from 'components/Navigation/Header';
 
 const { Content } = Layout;

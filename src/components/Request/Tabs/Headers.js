@@ -119,8 +119,8 @@ class RequestTabsHeaders extends React.Component {
 			}
 		];
 
-		const { request } = this.props;
-		const { headers } = request;
+		const { context } = this.props;
+		const { headers } = context;
 
 		const dataSource = [];
 		let idCounter = 0;
@@ -141,18 +141,18 @@ class RequestTabsHeaders extends React.Component {
 	}
 
 	handleDelete = (id) => {
-		const { request, updateRequestKey } = this.props;
+		const { context, updateRequestContext } = this.props;
 		const dataSource = [...this.state.dataSource];
 
 		// Clone request headers
-		const headersClone = Object.assign({}, request.headers);
+		const headersClone = Object.assign({}, context.headers);
 
 		// Search header to delete
 		const headerToDelete = dataSource.find((item) => item.id === id);
 
 		// Delete and update request headers
 		delete headersClone[headerToDelete.key];
-		updateRequestKey('headers', headersClone);
+		updateRequestContext('headers', headersClone);
 
 		// Update table data
 		this.setState({
@@ -177,10 +177,10 @@ class RequestTabsHeaders extends React.Component {
 	};
 
 	handleSave = (row) => {
-		const { request, updateRequestKey } = this.props;
+		const { context, updateRequestContext } = this.props;
 
 		// Clone request headers
-		const headersClone = Object.assign({}, request.headers);
+		const headersClone = Object.assign({}, context.headers);
 
 		// Existing row
 		const newData = [...this.state.dataSource];
@@ -199,7 +199,7 @@ class RequestTabsHeaders extends React.Component {
 			}
 		};
 
-		updateRequestKey('headers', updatedHeaders);
+		updateRequestContext('headers', updatedHeaders);
 
 		// Update table data
 		newData.splice(index, 1, { ...item, ...row });

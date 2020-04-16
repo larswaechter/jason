@@ -10,46 +10,6 @@ const { TabPane } = Tabs;
 class Requests extends React.Component {
 	constructor(props) {
 		super(props);
-
-		const requests = [
-			{
-				metadata: { title: 'Test 1' },
-				request: {
-					url: 'https://jsonplaceholder.typicode.com/users',
-					method: 'get',
-					headers: {
-						'Content-Type': {
-							value: 'application/json'
-						}
-					}
-				}
-			}
-		];
-
-		const panes = [];
-		for (let i = 0; i < requests.length; i++) {
-			const request = requests[i];
-
-			panes.push({
-				key: i.toString(),
-				title: request.metadata.title,
-				request: requests[i]
-			});
-		}
-
-		// New request
-		panes.push({
-			title: 'Untitled request',
-			key: panes.length.toString(),
-			request: {}
-		});
-
-		this.state = {
-			// activeKey: panes[panes.length - 1].key.toString(),
-			activeKey: '0',
-			panes,
-			requests
-		};
 	}
 
 	componentDidMount = () => {
@@ -62,87 +22,60 @@ class Requests extends React.Component {
 
 	handleKeyDown = (e) => {
 		const { keyCode, altKey } = e;
-		const { panes, activeKey } = this.state;
+		const { requests, activeRequest, addRequest, removeRequest, setActiveRequest } = this.props;
 
 		if (altKey) {
 			// Alt + 1-9 => Switch to tab
-			if (keyCode >= 49 && keyCode <= 57 && keyCode - 49 < panes.length) {
-				this.setState({
-					activeKey: (keyCode - 49).toString()
-				});
+			if (keyCode >= 49 && keyCode <= 57 && keyCode - 49 < requests.length) {
+				setActiveRequest(keyCode - 49);
 
 				// Alt + T => Add new tab
 			} else if (keyCode === 84) {
-				this.add();
+				addRequest();
 
 				// Alt + W => Close current tab
-			} else if (keyCode === 87 && panes.length) {
-				this.remove(activeKey);
+			} else if (keyCode === 87 && requests.length) {
+				removeRequest(activeRequest);
 			}
 		}
 	};
 
 	onChange = (activeKey) => {
-		this.setState({ activeKey });
+		this.props.setActiveRequest(activeKey);
 	};
 
 	onEdit = (targetKey, action) => {
 		this[action](targetKey);
 	};
 
-	add = (request = {}) => {
-		const { panes } = this.state;
-		const activeKey = `tab-${panes.length + 1}`;
-
-		panes.push({
-			title: request.metadata ? request.metadata.title : 'Untitled request',
-			key: activeKey,
-			request
-		});
-		this.setState({ panes, activeKey });
+	add = () => {
+		this.props.addRequest();
 	};
 
 	remove = (targetKey) => {
-		let { activeKey } = this.state;
-		let lastIndex;
-
-		this.state.panes.forEach((pane, i) => {
-			if (pane.key === targetKey) {
-				lastIndex = i - 1;
-			}
-		});
-
-		const panes = this.state.panes.filter((pane) => pane.key !== targetKey);
-
-		if (panes.length && activeKey === targetKey) {
-			if (lastIndex >= 0) {
-				activeKey = panes[lastIndex].key;
-			} else {
-				activeKey = panes[0].key;
-			}
-		}
-
-		this.setState({ panes, activeKey });
+		this.props.removeRequest(targetKey);
 	};
 
 	render() {
-		const { activeKey, panes } = this.state;
+		const { requests, activeRequest, addRequest, updateRequest } = this.props;
 
 		return (
 			<div className="Requests">
-				{panes.length ? (
+				{requests.length ? (
 					<Tabs
 						onChange={this.onChange}
-						activeKey={activeKey}
+						activeKey={activeRequest.toString()}
 						type="editable-card"
 						onEdit={this.onEdit}
 					>
-						{panes.map((pane) => (
-							<TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
+						{requests.map((request, i) => (
+							<TabPane tab={request.metadata.title} key={i} closable={true}>
 								<Request
-									request={pane.request}
-									addRequest={this.add}
-									active={pane.key === activeKey}
+									request={request}
+									addRequest={addRequest}
+									updateRequest={updateRequest}
+									id={i}
+									active={i === activeRequest}
 								/>
 							</TabPane>
 						))}
@@ -154,9 +87,5 @@ class Requests extends React.Component {
 		);
 	}
 }
-
-Requests.defaultProps = {
-	requests: []
-};
 
 export default Requests;

@@ -10,7 +10,7 @@ import RequestTabsBody from './Body';
 const { TabPane } = Tabs;
 
 const RequestTabs = (props) => {
-	const { request, updateRequestKey } = props;
+	const { context, updateRequestContext } = props;
 
 	const panes = [
 		{
@@ -20,7 +20,9 @@ const RequestTabs = (props) => {
 					Parameters
 				</span>
 			),
-			content: <RequestTabsParameters request={request} updateRequestKey={updateRequestKey} />,
+			content: (
+				<RequestTabsParameters context={context} updateRequestContext={updateRequestContext} />
+			),
 			key: 1
 		},
 		{
@@ -30,7 +32,7 @@ const RequestTabs = (props) => {
 					Headers
 				</span>
 			),
-			content: <RequestTabsHeaders request={request} updateRequestKey={updateRequestKey} />,
+			content: <RequestTabsHeaders context={context} updateRequestContext={updateRequestContext} />,
 			key: 2
 		},
 		{
@@ -40,7 +42,7 @@ const RequestTabs = (props) => {
 					Body
 				</span>
 			),
-			content: <RequestTabsBody request={request} updateRequestKey={updateRequestKey} />,
+			content: <RequestTabsBody context={context} updateRequestContext={updateRequestContext} />,
 			key: 3
 		}
 	];

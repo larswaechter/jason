@@ -116,8 +116,8 @@ class RequestTabsParameters extends React.Component {
 			}
 		];
 
-		const { request } = this.props;
-		const { params } = request;
+		const { context } = this.props;
+		const { params } = context;
 
 		const dataSource = [];
 		let idCounter = 0;
@@ -138,18 +138,18 @@ class RequestTabsParameters extends React.Component {
 	}
 
 	handleDelete = (id) => {
-		const { request, updateRequestKey } = this.props;
+		const { context, updateRequestContext } = this.props;
 		const dataSource = [...this.state.dataSource];
 
 		// Clone request params
-		const paramsClone = Object.assign({}, request.params);
+		const paramsClone = Object.assign({}, context.params);
 
 		// Search param to delete
 		const paramToDelete = dataSource.find((item) => item.id === id);
 
 		// Delete and update request params
 		delete paramsClone[paramToDelete.key];
-		updateRequestKey('params', paramsClone);
+		updateRequestContext('params', paramsClone);
 
 		// Update table data
 		this.setState({
@@ -174,10 +174,10 @@ class RequestTabsParameters extends React.Component {
 	};
 
 	handleSave = (row) => {
-		const { request, updateRequestKey } = this.props;
+		const { context, updateRequestContext } = this.props;
 
 		// Clone request params
-		const paramsClone = Object.assign({}, request.params);
+		const paramsClone = Object.assign({}, context.params);
 
 		// Existing row
 		const newData = [...this.state.dataSource];
@@ -196,7 +196,7 @@ class RequestTabsParameters extends React.Component {
 			}
 		};
 
-		updateRequestKey('params', updatedParams);
+		updateRequestContext('params', updatedParams);
 
 		// Update table data
 		newData.splice(index, 1, { ...item, ...row });

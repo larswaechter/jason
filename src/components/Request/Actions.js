@@ -10,10 +10,10 @@ import {
 const { ipcRenderer } = window.require('electron');
 
 const RequestActions = (props) => {
-	const { requestMerged, importRequest, cloneRequest } = props;
+	const { request, importRequest, cloneRequest } = props;
 
 	const handleSave = () => {
-		ipcRenderer.send('save-request', { request: requestMerged });
+		ipcRenderer.send('save-request', { request });
 	};
 
 	const handleImport = () => {
@@ -28,7 +28,7 @@ const RequestActions = (props) => {
 	};
 
 	const handleExport = () => {
-		fsExportRequest({ request: requestMerged }, (err) => {
+		fsExportRequest({ request }, (err) => {
 			if (err) {
 				message.error(err.message);
 			} else {

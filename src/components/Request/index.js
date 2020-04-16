@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Typography, Divider, message } from 'antd';
 import { v4 as uuid } from 'uuid';
 
 import { AxiosService } from '../../services/axios';
 import { Helper } from '../../services/helper';
-import { appendRequestHistory } from '../../utils/electron.api';
+
+import { appendHistory } from '../../actions/';
 
 import Response from '../Response/';
 
@@ -18,9 +20,10 @@ class Request extends Component {
 	constructor(props) {
 		super(props);
 
-		const { request } = props;
-
-		this.state = this.createState(request);
+		this.state = {
+			axios: new AxiosService(),
+			isLoading: false
+		};
 	}
 
 	componentDidMount = () => {
@@ -39,18 +42,8 @@ class Request extends Component {
 		}
 	};
 
-	createState = (request = {}) => {
-		return {
-			axios: new AxiosService(),
-			metadata: Helper.createEmptyMetadata(request.metadata),
-			request: Helper.createEmptyRequest(request.request),
-			response: Helper.createEmptyResponse(request.response),
-			isLoading: false
-		};
-	};
-
 	handleKeyDown = (e) => {
-		const { active } = this.props;
+		const { id, updateRequest, active } = this.props;
 		const { keyCode, altKey } = e;
 
 		if (active && altKey) {
@@ -64,27 +57,27 @@ class Request extends Component {
 
 				// R => Reset
 			} else if (keyCode === 82) {
-				this.setState(this.createState());
+				updateRequest(id, Helper.createRequest());
 			}
 		}
 	};
 
-	updateRequestKey = (key, value) => {
-		this.setState({
-			request: {
-				...this.state.request,
-				[key]: value
-			}
-		});
+	updateRequestContext = (key, value) => {
+		const { id, request, updateRequest } = this.props;
+		const { context } = request;
+		updateRequest(id, { ...request, context: { ...context, [key]: value } });
 	};
 
 	updateResponse = (response) => {
-		this.setState({ response });
+		const { id, request, updateRequest } = this.props;
+		updateRequest(id, { ...request, response });
 	};
 
 	sendRequest = () => {
-		const { axios, request, metadata, isLoading } = this.state;
-		const { isValid, msg } = Helper.validateRequest(request);
+		const { axios, isLoading } = this.state;
+		const { dispatch, id, request, updateRequest } = this.props;
+		const { metadata, context } = request;
+		const { isValid, msg } = Helper.validateRequestContext(context);
 
 		// Validate request
 		if (!isValid || isLoading) {
@@ -100,7 +93,7 @@ class Request extends Component {
 			let newResponse = Helper.createEmptyResponse({ startTime });
 
 			axios
-				.sendRequest(request)
+				.sendRequest(context)
 				.then((res) => {
 					newResponse = {
 						...newResponse,
@@ -131,16 +124,19 @@ class Request extends Component {
 
 					this.setState(
 						{
-							isLoading: false,
-							metadata: {
-								...metadata,
-								completed: true
-							},
-							response: newResponse
+							isLoading: false
 						},
 						() => {
-							const { metadata, request, response } = this.state;
-							appendRequestHistory({ metadata, request, response });
+							const requestFinished = {
+								...request,
+								metadata: {
+									...metadata,
+									completed: true
+								},
+								response: newResponse
+							};
+							updateRequest(id, requestFinished);
+							dispatch(appendHistory(request));
 						}
 					);
 				});
@@ -148,30 +144,33 @@ class Request extends Component {
 	};
 
 	cloneRequest = () => {
-		this.props.addRequest({ ...this.state, metadata: { ...this.state.metadata, uuid: uuid() } });
+		this.props.addRequest({
+			...this.props.request,
+			metadata: { ...this.props.request.metadata, uuid: uuid() }
+		});
 	};
 
 	importRequest = (request) => {
-		console.log(request);
-
-		this.setState({ ...request });
+		const { id, updateRequest } = this.props;
+		updateRequest(id, request);
 	};
 
 	render() {
-		const { metadata, request, response, isLoading } = this.state;
-		const requestMerged = { metadata, request, response };
+		const { isLoading } = this.state;
+		const { request } = this.props;
+		const { metadata, context, response } = request;
 
 		return (
 			<div className="Request">
 				<RequestUrl
-					request={request}
-					updateRequestKey={this.updateRequestKey}
+					context={context}
+					updateRequestContext={this.updateRequestContext}
 					sendRequest={this.sendRequest}
 					isLoading={isLoading}
 				/>
 
 				<RequestActions
-					requestMerged={requestMerged}
+					request={request}
 					importRequest={this.importRequest}
 					cloneRequest={this.cloneRequest}
 				/>
@@ -179,7 +178,7 @@ class Request extends Component {
 				<Divider />
 
 				<Title level={4}>Request options</Title>
-				<RequestTabs request={request} updateRequestKey={this.updateRequestKey} />
+				<RequestTabs context={context} updateRequestContext={this.updateRequestContext} />
 
 				<Divider />
 
@@ -199,4 +198,4 @@ Request.defaultProps = {
 	request: {}
 };
 
-export default Request;
+export default connect()(Request);
