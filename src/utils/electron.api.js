@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 import { REQUESTS } from '../constants/requests';
 
 import { Helper } from '../services/helper';
@@ -23,12 +25,22 @@ export const setSavedRequests = (requests) => {
 
 export const addSavedRequest = (request) => {
 	const requests = getSavedRequests();
+	const requestIdx = requests.findIndex(
+		(_request) => _request.metadata.uuid === request.metadata.uuid
+	);
 
 	// Store empty response
 	const newRequest = {
 		...request,
 		response: Helper.createEmptyResponse()
 	};
+
+	// Update if already exists
+	if (requestIdx >= 0) {
+		requests[requestIdx] = newRequest;
+		return setSavedRequests(requests);
+	}
+
 	requests.unshift(newRequest);
 
 	return setSavedRequests(requests);
@@ -55,11 +67,21 @@ export const setRequestHistory = (history) => {
 
 export const appendRequestHistory = (request) => {
 	const history = getRequestsHistory();
+
+	// Store with new uuid
+	const newRequest = {
+		...request,
+		metadata: {
+			...request.metadata,
+			uuid: uuid()
+		}
+	};
+
 	if (history.length >= 10) {
 		history.pop();
-		history.unshift(request);
+		history.unshift(newRequest);
 	} else {
-		history.unshift(request);
+		history.unshift(newRequest);
 	}
 
 	return setRequestHistory(history);

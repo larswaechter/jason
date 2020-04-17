@@ -62,10 +62,23 @@ class Request extends Component {
 		}
 	};
 
-	updateRequestContext = (key, value) => {
+	updateMetadata = (key, value, markUnsaved = true) => {
 		const { id, request, updateRequest } = this.props;
-		const { context } = request;
-		updateRequest(id, { ...request, context: { ...context, [key]: value } });
+		const { metadata } = request;
+		updateRequest(id, {
+			...request,
+			metadata: { ...metadata, [key]: value, unsavedChanges: markUnsaved }
+		});
+	};
+
+	updateRequestContext = (key, value, markUnsaved = true) => {
+		const { id, request, updateRequest } = this.props;
+		const { context, metadata } = request;
+		updateRequest(id, {
+			...request,
+			metadata: { ...metadata, unsavedChanges: markUnsaved },
+			context: { ...context, [key]: value }
+		});
 	};
 
 	updateResponse = (response) => {
@@ -173,6 +186,7 @@ class Request extends Component {
 					request={request}
 					importRequest={this.importRequest}
 					cloneRequest={this.cloneRequest}
+					updateMetadata={this.updateMetadata}
 				/>
 
 				<Divider />

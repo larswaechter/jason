@@ -25,7 +25,7 @@ const Response = (props) => {
 		);
 	}
 
-	if (!completed || !Object.keys(response).length) {
+	if (!completed || Object.keys(response).length <= 1) {
 		return (
 			<div>
 				{title}

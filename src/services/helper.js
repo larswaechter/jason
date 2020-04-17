@@ -20,7 +20,8 @@ export class Helper {
 		uuid: uuid(),
 		title: metadata.title || 'Untitled request',
 		createdAt: metadata.createdAt || Date.now(),
-		completed: metadata.completed || false
+		completed: metadata.completed || false,
+		unsavedChanges: false
 	});
 
 	static CreateEmptyContext = (context = {}) => ({

@@ -1,43 +1,73 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, message } from 'antd';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { HeartOutlined } from '@ant-design/icons';
 
-import { isSavedRequest, removeSavedRequest } from '../../../utils/electron.api';
+import { isSavedRequest } from '../../../utils/electron.api';
 
 import { saveRequest, unsaveRequest } from '../../../constants/action-types';
 
+import ModalsSave from '../../Modals/Save';
+
 const RequestActionsSave = (props) => {
-	const { dispatch, request } = props;
+	const { dispatch, request, updateMetadata } = props;
 	const { metadata } = request;
-	const { uuid } = metadata;
+	const { uuid, title } = metadata;
 
 	const [isSaved, setIsSaved] = useState(isSavedRequest(uuid));
 
-	const handleSave = () => {
+	const handleSave = (title) => {
 		setIsSaved(true);
-		dispatch(saveRequest(request));
-		// ipcRenderer.send('save-request', { request });
+		dispatch(
+			saveRequest({
+				...request,
+				metadata: {
+					...request.metadata,
+					title
+				}
+			})
+		);
+		updateMetadata('title', title, false);
+		message.info('Request saved!');
+	};
+
+	const handleSaveChanges = () => {
+		setIsSaved(true);
+		dispatch(
+			saveRequest({
+				...request,
+				metadata: {
+					...request.metadata,
+					unsavedChanges: false
+				}
+			})
+		);
+		updateMetadata('unsavedChanges', false, false);
+		message.info('Saved changes!');
 	};
 
 	const handleUnsave = () => {
 		setIsSaved(false);
 		dispatch(unsaveRequest(uuid));
+		message.info('Request unsaved!');
 	};
 
 	if (isSaved) {
 		return (
-			<Button type="default" icon={<HeartOutlined />} onClick={handleUnsave}>
-				Unsave
-			</Button>
+			<div>
+				<Button type="default" icon={<HeartOutlined />} onClick={handleUnsave}>
+					Unsave
+				</Button>
+				{metadata.unsavedChanges ? (
+					<Button type="link" onClick={handleSaveChanges}>
+						Save changes
+					</Button>
+				) : null}
+			</div>
 		);
 	}
 
-	return (
-		<Button type="default" icon={<HeartFilled />} onClick={handleSave}>
-			Save
-		</Button>
-	);
+	return <ModalsSave handleSave={handleSave} title={title} />;
 };
 
 export default connect()(RequestActionsSave);
