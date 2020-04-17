@@ -7,6 +7,7 @@ import {
 	addSavedRequest,
 	removeSavedRequest
 } from '../utils/electron.api';
+import RequestService from 'services/request';
 
 const initialState = {
 	savedRequests: getSavedRequests(),
@@ -18,7 +19,16 @@ const sidebar = (state = initialState, action) => {
 		case SAVE_REQUEST:
 			return {
 				...state,
-				savedRequests: [...addSavedRequest(action.request)]
+				savedRequests: [
+					...addSavedRequest({
+						...action.request,
+						metadata: {
+							...action.request.metadata,
+							unsavedChanges: false
+						},
+						response: RequestService.createEmptyResponse()
+					})
+				]
 			};
 
 		case UNSAVE_REQUEST:

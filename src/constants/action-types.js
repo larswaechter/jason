@@ -1,4 +1,4 @@
-import { Helper } from '../services/helper';
+import RequestService from '../services/request';
 
 export const ADD_REQUEST = 'ADD_REQUEST';
 export const REMOVE_REQUEST = 'REMOVE_REQUEST';
@@ -12,7 +12,7 @@ export const APPEND_HISTORY = 'APPEND_HISTORY';
 
 // Request tabs
 
-export const addRequest = (request = Helper.createRequest()) => ({
+export const addRequest = (request = RequestService.createRequest()) => ({
 	type: ADD_REQUEST,
 	request
 });

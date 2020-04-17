@@ -4,7 +4,7 @@ import { Typography, Divider, message } from 'antd';
 import { v4 as uuid } from 'uuid';
 
 import { AxiosService } from '../../services/axios';
-import { Helper } from '../../services/helper';
+import RequestService from '../../services/request';
 
 import { appendHistory } from '../../constants/action-types';
 
@@ -57,7 +57,7 @@ class Request extends Component {
 
 				// R => Reset
 			} else if (keyCode === 82) {
-				updateRequest(id, Helper.createRequest());
+				updateRequest(id, RequestService.createRequest());
 			}
 		}
 	};
@@ -90,7 +90,7 @@ class Request extends Component {
 		const { axios, isLoading } = this.state;
 		const { dispatch, id, request, updateRequest } = this.props;
 		const { metadata, context } = request;
-		const { isValid, msg } = Helper.validateRequestContext(context);
+		const { isValid, msg } = RequestService.validateContext(context);
 
 		// Validate request
 		if (!isValid || isLoading) {
@@ -103,7 +103,7 @@ class Request extends Component {
 		const startTime = Date.now();
 
 		this.setState({ isLoading: true }, () => {
-			let newResponse = Helper.createEmptyResponse({ startTime });
+			let newResponse = RequestService.createEmptyResponse({ startTime });
 
 			axios
 				.sendRequest(context)

@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 import { REQUESTS } from '../constants/requests';
 
-import { Helper } from '../services/helper';
+import RequestService from '../services/request';
 
 const remote = window.require('electron').remote.require('./remote');
 const electronStore = window.require('electron').remote.getGlobal('electronStore');
@@ -32,7 +32,7 @@ export const addSavedRequest = (request) => {
 	// Store empty response
 	const newRequest = {
 		...request,
-		response: Helper.createEmptyResponse()
+		response: RequestService.createEmptyResponse()
 	};
 
 	// Update if already exists

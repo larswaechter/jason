@@ -1,4 +1,4 @@
-import { Helper } from '../services/helper';
+import RequestService from '../services/request';
 import {
 	ADD_REQUEST,
 	REMOVE_REQUEST,
@@ -9,7 +9,7 @@ import {
 const initialState = {
 	activeRequest: 0,
 	requests: [
-		Helper.createRequest({
+		RequestService.createRequest({
 			metadata: { title: 'Test 1' },
 			context: {
 				url: 'https://jsonplaceholder.typicode.com/users',

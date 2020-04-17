@@ -4,7 +4,6 @@ import { Button, message } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 
 import { isSavedRequest } from '../../../utils/electron.api';
-
 import { saveRequest, unsaveRequest } from '../../../constants/action-types';
 
 import ModalsSave from '../../Modals/Save';
@@ -33,15 +32,7 @@ const RequestActionsSave = (props) => {
 
 	const handleSaveChanges = () => {
 		setIsSaved(true);
-		dispatch(
-			saveRequest({
-				...request,
-				metadata: {
-					...request.metadata,
-					unsavedChanges: false
-				}
-			})
-		);
+		dispatch(saveRequest(request));
 		updateMetadata('unsavedChanges', false, false);
 		message.info('Saved changes!');
 	};

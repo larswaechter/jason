@@ -2,7 +2,7 @@ import React from 'react';
 
 import AceEditor from 'react-ace';
 
-import { Helper } from 'services/helper';
+import HelperService from '../../services/helper';
 
 // Ace-Editor configs
 import 'ace-builds/src-noconflict/theme-github';
@@ -23,7 +23,7 @@ const EditorsReader = (props) => {
 				readOnly={true}
 				fontSize={14}
 				highlightActiveLine={true}
-				value={Helper.prettyPrint(code, language)}
+				value={HelperService.prettyPrint(code, language)}
 				height="600px"
 				width="100%"
 				setOptions={{

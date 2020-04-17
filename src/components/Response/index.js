@@ -13,6 +13,7 @@ const { Title } = Typography;
 const Response = (props) => {
 	const { metadata, response, isLoading, sendRequest, updateResponse } = props;
 	const { completed } = metadata;
+	const { result } = response;
 
 	const title = <Title level={4}>Response details</Title>;
 
@@ -25,7 +26,9 @@ const Response = (props) => {
 		);
 	}
 
-	if (!completed || Object.keys(response).length <= 1) {
+	console.log(response);
+
+	if (!completed || !result) {
 		return (
 			<div>
 				{title}

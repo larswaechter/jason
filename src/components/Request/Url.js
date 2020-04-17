@@ -19,7 +19,9 @@ const RequestUrl = (props) => {
 	};
 
 	const handleUrlBlur = () => {
-		updateRequestContext('url', url);
+		if (url !== context.url) {
+			updateRequestContext('url', url);
+		}
 	};
 
 	const addonMethods = (

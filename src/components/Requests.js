@@ -59,7 +59,19 @@ class Requests extends React.Component {
 	render() {
 		const { requests, activeRequest, addRequest, updateRequest } = this.props;
 
-		console.log(requests);
+		const unsavedChangesIndicator = (
+			<span
+				style={{
+					height: 7,
+					width: 7,
+					backgroundColor: '#1890ff',
+					display: 'inline-block',
+					marginLeft: 5,
+					marginBottom: 1,
+					borderRadius: 15
+				}}
+			></span>
+		);
 
 		return (
 			<div className="Requests">
@@ -69,9 +81,19 @@ class Requests extends React.Component {
 						activeKey={activeRequest.toString()}
 						type="editable-card"
 						onEdit={this.onEdit}
+						size="large"
 					>
 						{requests.map((request, i) => (
-							<TabPane tab={request.metadata.title} key={i} closable={true}>
+							<TabPane
+								tab={
+									<span>
+										{request.metadata.title}
+										{request.metadata.unsavedChanges ? unsavedChangesIndicator : null}
+									</span>
+								}
+								key={i}
+								closable={true}
+							>
 								<Request
 									request={request}
 									addRequest={addRequest}

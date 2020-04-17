@@ -9,12 +9,12 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/mode-xml';
 
-import { Helper } from 'services/helper';
+import HelperService from '../../services/helper';
 
 const EditorsWriter = (props) => {
 	const { code, language, onChange } = props;
 
-	const [content, setContent] = useState(Helper.prettyPrint(code, language));
+	const [content, setContent] = useState(HelperService.prettyPrint(code, language));
 
 	const placeholder = language === 'form' ? 'name=value\nname2=value2' : 'Body';
 
