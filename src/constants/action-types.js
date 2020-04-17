@@ -6,7 +6,11 @@ export const UPDATE_REQUEST = 'UPDATE_REQUEST';
 export const SET_ACTIVE_REQUEST = 'SET_ACTIVE_REQUEST';
 
 export const SAVE_REQUEST = 'SAVE_REQUEST';
+export const UNSAVE_REQUEST = 'UNSAVE_REQUEST';
+
 export const APPEND_HISTORY = 'APPEND_HISTORY';
+
+// Request tabs
 
 export const addRequest = (request = Helper.createRequest()) => ({
 	type: ADD_REQUEST,
@@ -29,9 +33,16 @@ export const setActiveRequest = (id) => ({
 	id
 });
 
+// Saved requests and history
+
 export const saveRequest = (request) => ({
 	type: SAVE_REQUEST,
 	request
+});
+
+export const unsaveRequest = (uuid) => ({
+	type: UNSAVE_REQUEST,
+	uuid
 });
 
 export const appendHistory = (request) => ({

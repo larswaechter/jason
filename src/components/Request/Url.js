@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Input, Select, Row, Col } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 
@@ -6,14 +6,20 @@ const { Option } = Select;
 
 const RequestUrl = (props) => {
 	const { context, updateRequestContext, sendRequest, isLoading } = props;
-	const { url, method } = context;
+	const { method } = context;
+
+	const [url, setUrl] = useState(context.url);
 
 	const handleMethodChange = (method) => {
 		updateRequestContext('method', method);
 	};
 
 	const handleUrlChange = (e) => {
-		updateRequestContext('url', e.target.value);
+		setUrl(e.target.value);
+	};
+
+	const handleUrlBlur = () => {
+		updateRequestContext('url', url);
 	};
 
 	const addonMethods = (
@@ -38,6 +44,7 @@ const RequestUrl = (props) => {
 							placeholder="Enter URL"
 							size="large"
 							onChange={handleUrlChange}
+							onBlur={handleUrlBlur}
 						/>
 					</Col>
 					<Col span={2}>

@@ -1,6 +1,11 @@
 import { connect } from 'react-redux';
 
-import { addRequest, setActiveRequest, removeRequest, updateRequest } from '../actions/';
+import {
+	addRequest,
+	setActiveRequest,
+	removeRequest,
+	updateRequest
+} from '../constants/action-types';
 import Requests from '../components/Requests';
 
 const mapStateToProps = (state) => ({

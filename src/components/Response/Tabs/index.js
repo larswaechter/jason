@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Tabs, Row, Col } from 'antd';
 import { FormatPainterOutlined, IdcardOutlined } from '@ant-design/icons';
@@ -10,7 +10,13 @@ const { TabPane } = Tabs;
 
 const ResponseTabs = (props) => {
 	const { response } = props;
-	const { result } = response;
+	const { result, autoShow } = response;
+
+	const [activeKey, setActiveKey] = useState(autoShow ? '1' : '0');
+
+	useEffect(() => {
+		setActiveKey(autoShow ? '1' : '0');
+	}, [autoShow]);
 
 	const panes = [
 		{
@@ -39,7 +45,7 @@ const ResponseTabs = (props) => {
 		<div className="ResponseTabs">
 			<Row>
 				<Col span={24}>
-					<Tabs defaultActiveKey="1">
+					<Tabs activeKey={activeKey} onChange={setActiveKey}>
 						{panes.map((pane) => (
 							<TabPane tab={pane.title} key={pane.key}>
 								{pane.content}

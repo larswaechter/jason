@@ -1,5 +1,10 @@
 import { Helper } from '../services/helper';
-import { ADD_REQUEST, REMOVE_REQUEST, UPDATE_REQUEST, SET_ACTIVE_REQUEST } from '../actions/index';
+import {
+	ADD_REQUEST,
+	REMOVE_REQUEST,
+	UPDATE_REQUEST,
+	SET_ACTIVE_REQUEST
+} from '../constants/action-types';
 
 const initialState = {
 	activeRequest: 0,
@@ -22,11 +27,21 @@ const initialState = {
 const requests = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_REQUEST:
-			return {
-				...state,
-				activeRequest: state.requests.length, // Set new request as active
-				requests: [...state.requests, action.request]
-			};
+			const requestIdx = state.requests.findIndex(
+				(request) => request.metadata.uuid === action.request.metadata.uuid
+			);
+
+			// If request is already existing, set as active
+			return requestIdx >= 0
+				? {
+						...state,
+						activeRequest: requestIdx
+				  }
+				: {
+						...state,
+						activeRequest: state.requests.length, // Set new request as active
+						requests: [...state.requests, action.request]
+				  };
 		case REMOVE_REQUEST:
 			const requestID = parseInt(action.id, 10);
 			return {

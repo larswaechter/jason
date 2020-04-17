@@ -1,5 +1,7 @@
 import { REQUESTS } from '../constants/requests';
 
+import { Helper } from '../services/helper';
+
 const remote = window.require('electron').remote.require('./remote');
 const electronStore = window.require('electron').remote.getGlobal('electronStore');
 
@@ -9,6 +11,39 @@ const electronStore = window.require('electron').remote.getGlobal('electronStore
 export const importRequest = remote.importRequest;
 export const exportRequest = remote.exportRequest;
 
+// Saved requests
+export const getSavedRequests = () => {
+	return electronStore.get(REQUESTS.SAVED, []);
+};
+
+export const setSavedRequests = (requests) => {
+	electronStore.set(REQUESTS.SAVED, requests);
+	return requests;
+};
+
+export const addSavedRequest = (request) => {
+	const requests = getSavedRequests();
+
+	// Store empty response
+	const newRequest = {
+		...request,
+		response: Helper.createEmptyResponse()
+	};
+	requests.unshift(newRequest);
+
+	return setSavedRequests(requests);
+};
+
+export const isSavedRequest = (uuid) => {
+	return getSavedRequests().find((request) => request.metadata.uuid === uuid);
+};
+
+export const removeSavedRequest = (uuid) => {
+	const savedRequests = getSavedRequests().filter((request) => request.metadata.uuid !== uuid);
+	return setSavedRequests(savedRequests);
+};
+
+// Request history
 export const getRequestsHistory = () => {
 	return electronStore.get(REQUESTS.HISTORY, []);
 };

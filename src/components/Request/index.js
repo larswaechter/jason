@@ -6,12 +6,12 @@ import { v4 as uuid } from 'uuid';
 import { AxiosService } from '../../services/axios';
 import { Helper } from '../../services/helper';
 
-import { appendHistory } from '../../actions/';
+import { appendHistory } from '../../constants/action-types';
 
 import Response from '../Response/';
 
 import RequestUrl from './Url';
-import RequestActions from './Actions';
+import RequestActions from './Actions/';
 import RequestTabs from './Tabs/';
 
 const { Title } = Typography;
@@ -193,9 +193,5 @@ class Request extends Component {
 		);
 	}
 }
-
-Request.defaultProps = {
-	request: {}
-};
 
 export default connect()(Request);

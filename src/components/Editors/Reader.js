@@ -2,14 +2,14 @@ import React from 'react';
 
 import AceEditor from 'react-ace';
 
+import { Helper } from 'services/helper';
+
 // Ace-Editor configs
 import 'ace-builds/src-noconflict/theme-github';
 
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/mode-xml';
-
-import { Helper } from 'services/helper';
 
 const EditorsReader = (props) => {
 	const { code, language } = props;

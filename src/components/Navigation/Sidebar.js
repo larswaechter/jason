@@ -3,30 +3,21 @@ import moment from 'moment';
 import { Layout, Menu } from 'antd';
 import { HeartOutlined, HistoryOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
+import { getSavedRequests } from '../../utils/electron.api';
+
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const { ipcRenderer } = window.require('electron');
 
 const NavigationSidebar = (props) => {
-	const { history, addRequest } = props;
-
-	console.log(history);
+	const { history, savedRequests, addRequest } = props;
 
 	const [collapsed, setCollapsed] = useState(false);
-	const [savedRequests, setSavedRequests] = useState([]);
 
 	const toggleCollapsed = (isCollapsed) => {
 		setCollapsed(isCollapsed);
 	};
-
-	useEffect(() => {
-		ipcRenderer.once('save-request-response', (event, { request }) => {
-			const requests = savedRequests.slice();
-			requests.unshift(request);
-			setSavedRequests(requests);
-		});
-	}, [savedRequests]);
 
 	return (
 		<Sider collapsible collapsed={collapsed} onCollapse={toggleCollapsed} theme="dark">
@@ -48,7 +39,14 @@ const NavigationSidebar = (props) => {
 					}
 				>
 					{savedRequests.map((request, i) => (
-						<Menu.Item key={i}>{request.metadata.title}</Menu.Item>
+						<Menu.Item
+							key={i}
+							onClick={() => {
+								addRequest(savedRequests[i]);
+							}}
+						>
+							{request.metadata.title}
+						</Menu.Item>
 					))}
 				</SubMenu>
 				<SubMenu
@@ -64,7 +62,11 @@ const NavigationSidebar = (props) => {
 						<Menu.Item
 							key={i + savedRequests.length}
 							onClick={() => {
-								addRequest(history[i]);
+								addRequest({
+									...history[i],
+									// Hide response tab content due to performance issues
+									response: { ...history[i].response, autoShow: false }
+								});
 							}}
 						>
 							{`${request.context.method.toUpperCase()} - ${moment(

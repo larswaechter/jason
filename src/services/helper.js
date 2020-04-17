@@ -46,7 +46,8 @@ export class Helper {
 		endTime: response.endTime || undefined,
 		duration: response.duration || undefined,
 		result: response.result || undefined,
-		error: response.error || undefined
+		error: response.error || undefined,
+		autoShow: true
 	});
 
 	static prettyPrint = (code, language) => {
