@@ -149,7 +149,7 @@ class Request extends Component {
 								response: newResponse
 							};
 							updateRequest(id, requestFinished);
-							dispatch(appendHistory(request));
+							dispatch(appendHistory(requestFinished));
 						}
 					);
 				});

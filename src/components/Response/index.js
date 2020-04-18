@@ -26,8 +26,6 @@ const Response = (props) => {
 		);
 	}
 
-	console.log(response);
-
 	if (!completed || !result) {
 		return (
 			<div>

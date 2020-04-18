@@ -40,6 +40,7 @@ const RequestActionsSave = (props) => {
 	const handleUnsave = () => {
 		setIsSaved(false);
 		dispatch(unsaveRequest(uuid));
+		updateMetadata('unsavedChanges', false, false);
 		message.info('Request unsaved!');
 	};
 
