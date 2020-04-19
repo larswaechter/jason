@@ -1,8 +1,30 @@
 import { create } from 'axios';
 
 export class AxiosService {
-	constructor(url) {
+	constructor() {
 		this.axios = create();
+		this.axios.interceptors.response.use(this.interceptResponse);
+	}
+
+	interceptResponse(response) {
+		const { headers } = response;
+		const [mime] = headers['content-type'].split(';');
+
+		let extension = '';
+
+		switch (mime) {
+			case 'application/json':
+				extension = 'json';
+				break;
+			case 'text/html':
+				extension = 'html';
+				break;
+			default:
+				extension = 'txt';
+				break;
+		}
+
+		return { ...response, extension };
 	}
 
 	// Transform request body data

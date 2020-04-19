@@ -11,7 +11,7 @@ class RequestService {
 
 	static createRequest = (request = {}) => ({
 		metadata: RequestService.createEmptyMetadata(request.metadata),
-		context: RequestService.CreateEmptyContext(request.context),
+		context: RequestService.createEmptyContext(request.context),
 		response: RequestService.createEmptyResponse(request.response)
 	});
 
@@ -23,7 +23,7 @@ class RequestService {
 		unsavedChanges: false
 	});
 
-	static CreateEmptyContext = (context = {}) => ({
+	static createEmptyContext = (context = {}) => ({
 		url: context.url || '',
 		method: context.method || 'get',
 		headers: context.headers || {

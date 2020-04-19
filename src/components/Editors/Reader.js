@@ -12,18 +12,18 @@ import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/mode-xml';
 
 const EditorsReader = (props) => {
-	const { code, language } = props;
+	const { code, extension } = props;
 
 	return (
 		<div className="EditorsReader">
 			<AceEditor
-				mode={language}
+				mode={extension}
 				theme="github"
 				placeholder="Body"
 				readOnly={true}
 				fontSize={14}
 				highlightActiveLine={true}
-				value={HelperService.prettyPrint(code, language)}
+				value={HelperService.prettyPrint(code, extension)}
 				height="600px"
 				width="100%"
 				setOptions={{

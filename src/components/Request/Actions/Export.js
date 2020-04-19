@@ -2,13 +2,13 @@ import React from 'react';
 import { Button, Tooltip, message } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 
-import { exportRequest as fsExportRequest } from '../../../utils/electron.api';
+import { exportRequest } from '../../../utils/electron.api';
 
 const RequestActionsExport = (props) => {
 	const { request } = props;
 
 	const handleExport = () => {
-		fsExportRequest({ request }, (err) => {
+		exportRequest(request, (err) => {
 			if (err) {
 				message.error(err.message);
 			} else {

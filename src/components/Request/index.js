@@ -197,8 +197,7 @@ class Request extends Component {
 				<Divider />
 
 				<Response
-					metadata={metadata}
-					response={response}
+					request={request}
 					isLoading={isLoading}
 					sendRequest={this.sendRequest}
 					updateResponse={this.updateResponse}

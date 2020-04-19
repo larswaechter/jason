@@ -7,29 +7,41 @@ import RequestService from '../services/request';
 const remote = window.require('electron').remote.require('./remote');
 const electronStore = window.require('electron').remote.getGlobal('electronStore');
 
-/**
- * Reference to remote methods used for interactions between main and render process
- */
+// Reference to remote methods used for interactions between main and render process
 export const importRequest = remote.importRequest;
 export const exportRequest = remote.exportRequest;
+export const exportResponseBody = remote.exportResponseBody;
 
-// Saved requests
+/**
+ * Get saved requests from electron store
+ * @returns {array} Saved requests
+ */
 export const getSavedRequests = () => {
 	return electronStore.get(REQUESTS.SAVED, []);
 };
 
+/**
+ * Set saved requests to electron store
+ * @param {array} requests
+ * @returns {array} Saved requests
+ */
 export const setSavedRequests = (requests) => {
 	electronStore.set(REQUESTS.SAVED, requests);
 	return requests;
 };
 
+/**
+ * Add saved request to electron store
+ * @param {Object} request
+ * @returns {array} Saved requests
+ */
 export const addSavedRequest = (request) => {
 	const requests = getSavedRequests();
 	const requestIdx = requests.findIndex(
 		(_request) => _request.metadata.uuid === request.metadata.uuid
 	);
 
-	// Store empty response
+	// Use empty response
 	const newRequest = {
 		...request,
 		response: RequestService.createEmptyResponse()
@@ -41,30 +53,54 @@ export const addSavedRequest = (request) => {
 		return setSavedRequests(requests);
 	}
 
+	// Prepend request
 	requests.unshift(newRequest);
 
 	return setSavedRequests(requests);
 };
 
+/**
+ * Check if request is saved
+ * @param {string} uuid - UUID of the request
+ * @returns {boolean} If request is saved
+ */
 export const isSavedRequest = (uuid) => {
 	return getSavedRequests().find((request) => request.metadata.uuid === uuid);
 };
 
+/**
+ * Remove saved request from electron store
+ * @param {string} uuid - UUID of the request
+ * @returns {array} Saved requests
+ */
 export const removeSavedRequest = (uuid) => {
 	const savedRequests = getSavedRequests().filter((request) => request.metadata.uuid !== uuid);
 	return setSavedRequests(savedRequests);
 };
 
-// Request history
+/**
+ * Get requests history from electron store
+ * @returns {array} Request history
+ */
 export const getRequestsHistory = () => {
 	return electronStore.get(REQUESTS.HISTORY, []);
 };
 
+/**
+ * Set requests history to electron store
+ * @param {array} history
+ * @returns {array} Requests history
+ */
 export const setRequestHistory = (history) => {
 	electronStore.set(REQUESTS.HISTORY, history);
 	return history;
 };
 
+/**
+ * Append request to requests history in electron store
+ * @param {Object} request
+ * @returns {array} Requests history
+ */
 export const appendRequestHistory = (request) => {
 	const history = getRequestsHistory();
 

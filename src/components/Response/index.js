@@ -11,7 +11,8 @@ import ResponseActions from './Actions';
 const { Title } = Typography;
 
 const Response = (props) => {
-	const { metadata, response, isLoading, sendRequest, updateResponse } = props;
+	const { request, isLoading, sendRequest, updateResponse } = props;
+	const { metadata, response } = request;
 	const { completed } = metadata;
 	const { result } = response;
 
@@ -51,7 +52,7 @@ const Response = (props) => {
 	return (
 		<div className="Response">
 			{title}
-			<ResponseActions updateResponse={updateResponse} />
+			<ResponseActions request={request} updateResponse={updateResponse} />
 			<ResponseDetails response={response} />
 			<ResponseTabs response={response} />
 		</div>
