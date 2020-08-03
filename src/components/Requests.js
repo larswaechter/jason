@@ -23,7 +23,7 @@ class Requests extends React.Component {
 		if (altKey) {
 			// Alt + 1-9 => Switch to tab
 			if (keyCode >= 49 && keyCode <= 57 && keyCode - 49 < requests.length) {
-				setActiveRequest(keyCode - 49);
+				setActiveRequest(requests[keyCode - 49].metadata.uuid);
 
 				// Alt + T => Add new tab
 			} else if (keyCode === 84) {
@@ -55,6 +55,8 @@ class Requests extends React.Component {
 	render() {
 		const { requests, activeRequest, addRequest, updateRequest } = this.props;
 
+		console.log(requests);
+
 		const unsavedChangesIndicator = (
 			<span
 				style={{
@@ -74,7 +76,7 @@ class Requests extends React.Component {
 				{requests.length ? (
 					<Tabs
 						onChange={this.onChange}
-						activeKey={activeRequest.toString()}
+						activeKey={activeRequest}
 						type="editable-card"
 						onEdit={this.onEdit}
 						size="large"
@@ -87,15 +89,15 @@ class Requests extends React.Component {
 										{request.metadata.unsavedChanges ? unsavedChangesIndicator : null}
 									</span>
 								}
-								key={i}
+								key={request.metadata.uuid}
 								closable={true}
 							>
 								<Request
 									request={request}
 									addRequest={addRequest}
 									updateRequest={updateRequest}
-									id={i}
-									active={i === activeRequest}
+									id={request.metadata.uuid}
+									active={request.metadata.uuid === activeRequest}
 								/>
 							</TabPane>
 						))}

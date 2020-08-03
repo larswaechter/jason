@@ -16,7 +16,7 @@ class RequestService {
 	});
 
 	static createEmptyMetadata = (metadata = {}) => ({
-		uuid: uuid(),
+		uuid: metadata.uuid || uuid(),
 		title: metadata.title || 'Untitled request',
 		createdAt: metadata.createdAt || Date.now(),
 		completed: metadata.completed || false,
