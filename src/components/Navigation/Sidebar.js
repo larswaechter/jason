@@ -3,24 +3,27 @@ import moment from 'moment';
 import { Layout, Menu } from 'antd';
 import { HeartOutlined, HistoryOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
-import { getSavedRequests } from '../../utils/electron.api';
-
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
-const { ipcRenderer } = window.require('electron');
-
 const NavigationSidebar = (props) => {
-	const { history, savedRequests, addRequest } = props;
+	const { history, savedRequests, addRequest, handleSidebarToggle } = props;
 
 	const [collapsed, setCollapsed] = useState(false);
 
 	const toggleCollapsed = (isCollapsed) => {
 		setCollapsed(isCollapsed);
+		handleSidebarToggle(isCollapsed);
 	};
 
 	return (
-		<Sider collapsible collapsed={collapsed} onCollapse={toggleCollapsed} theme="dark">
+		<Sider
+			collapsible
+			collapsed={collapsed}
+			onCollapse={toggleCollapsed}
+			theme="dark"
+			style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}
+		>
 			<div
 				style={{
 					background: 'rgba(255, 255, 255, 0.2)',
@@ -28,6 +31,7 @@ const NavigationSidebar = (props) => {
 					margin: '16px'
 				}}
 			/>
+
 			<Menu mode="inline" theme="dark" selectable={false}>
 				<SubMenu
 					key="sub1"
