@@ -55,8 +55,6 @@ class Requests extends React.Component {
 	render() {
 		const { requests, activeRequest, addRequest, updateRequest } = this.props;
 
-		console.log(requests);
-
 		const unsavedChangesIndicator = (
 			<span
 				style={{

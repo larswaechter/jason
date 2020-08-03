@@ -8,9 +8,7 @@ const remote = window.require('electron').remote.require('./remote');
 const electronStore = window.require('electron').remote.getGlobal('electronStore');
 
 // Reference to remote methods used for interactions between main and render process
-export const importRequest = remote.importRequest;
-export const exportRequest = remote.exportRequest;
-export const exportResponseBody = remote.exportResponseBody;
+export const { importRequest, exportRequest, exportResponseBody } = remote;
 
 /**
  * Get saved requests from electron store

@@ -101,6 +101,7 @@ const requests = (state = initialState, action) => {
 
 			return {
 				...state,
+				activeRequest: action.request.metadata.uuid,
 				requests
 			};
 
