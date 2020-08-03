@@ -3,6 +3,8 @@ import moment from 'moment';
 import { Layout, Menu } from 'antd';
 import { HeartOutlined, HistoryOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
+const { shell } = window.require('electron');
+
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
@@ -88,9 +90,16 @@ const NavigationSidebar = (props) => {
 						</span>
 					}
 				>
-					<Menu.Item key="10">Website</Menu.Item>
-					<Menu.Item key="11">GitHub</Menu.Item>
-					<Menu.Item key="12">Twitter</Menu.Item>
+					<Menu.Item key="10">
+						<a onClick={() => shell.openExternal('https://larswaechter.github.io/jason/')}>
+							Website
+						</a>
+					</Menu.Item>
+					<Menu.Item key="11">
+						<a onClick={() => shell.openExternal('https://github.com/larswaechter/jason')}>
+							GitHub
+						</a>
+					</Menu.Item>
 				</SubMenu>
 			</Menu>
 		</Sider>
