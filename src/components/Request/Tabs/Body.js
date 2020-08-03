@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Radio, Input } from 'antd';
+import { Radio } from 'antd';
 import EditorsWriter from 'components/Editors/Writer';
 
 const RequestTabsBody = (props) => {

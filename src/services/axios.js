@@ -76,7 +76,7 @@ export class AxiosService {
 				case 'json':
 					headersPrepared['Content-Type'] = 'application/json';
 					break;
-				case 'plain':
+				default:
 					headersPrepared['Content-Type'] = 'text/plain; charset=UTF-8';
 					break;
 			}

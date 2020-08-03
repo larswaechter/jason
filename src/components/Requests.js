@@ -8,10 +8,6 @@ import RequestCreate from './Request/Create';
 const { TabPane } = Tabs;
 
 class Requests extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
 	componentDidMount = () => {
 		window.addEventListener('keydown', this.handleKeyDown);
 	};

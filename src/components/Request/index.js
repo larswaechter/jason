@@ -171,7 +171,7 @@ class Request extends Component {
 	render() {
 		const { isLoading } = this.state;
 		const { request } = this.props;
-		const { metadata, context, response } = request;
+		const { context } = request;
 
 		return (
 			<div className="Request">

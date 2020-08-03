@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Input } from 'antd';
+import { Modal, Button, Input } from 'antd';
 
 import { HeartFilled } from '@ant-design/icons';
 
