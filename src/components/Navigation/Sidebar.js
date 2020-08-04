@@ -91,14 +91,14 @@ const NavigationSidebar = (props) => {
 					}
 				>
 					<Menu.Item key="10">
-						<a onClick={() => shell.openExternal('https://larswaechter.github.io/jason/')}>
+						<span onClick={() => shell.openExternal('https://larswaechter.github.io/jason/')}>
 							Website
-						</a>
+						</span>
 					</Menu.Item>
 					<Menu.Item key="11">
-						<a onClick={() => shell.openExternal('https://github.com/larswaechter/jason')}>
+						<span onClick={() => shell.openExternal('https://github.com/larswaechter/jason')}>
 							GitHub
-						</a>
+						</span>
 					</Menu.Item>
 				</SubMenu>
 			</Menu>

@@ -22,11 +22,16 @@ const RequestActionsSave = (props) => {
 				...request,
 				metadata: {
 					...request.metadata,
+					saved: true,
 					title
 				}
 			})
 		);
+
+		// TODO: Merge to 1 function call
 		updateMetadata('title', title, false);
+		updateMetadata('saved', true, false);
+
 		message.info('Request saved!');
 	};
 
@@ -44,13 +49,15 @@ const RequestActionsSave = (props) => {
 		message.info('Request unsaved!');
 	};
 
+	console.log(metadata);
+
 	if (isSaved) {
 		return (
 			<div>
 				<Button type="default" icon={<HeartOutlined />} onClick={handleUnsave}>
 					Unsave
 				</Button>
-				{metadata.unsavedChanges ? (
+				{metadata.saved && metadata.unsavedChanges ? (
 					<Button type="link" onClick={handleSaveChanges}>
 						Save changes
 					</Button>

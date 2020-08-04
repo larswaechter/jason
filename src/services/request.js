@@ -20,6 +20,7 @@ class RequestService {
 		title: metadata.title || 'Untitled request',
 		createdAt: metadata.createdAt || Date.now(),
 		completed: metadata.completed || false,
+		saved: metadata.saved || false,
 		unsavedChanges: false
 	});
 

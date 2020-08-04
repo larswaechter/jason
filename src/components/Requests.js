@@ -84,7 +84,9 @@ class Requests extends React.Component {
 								tab={
 									<span>
 										{request.metadata.title}
-										{request.metadata.unsavedChanges ? unsavedChangesIndicator : null}
+										{request.metadata.saved && request.metadata.unsavedChanges
+											? unsavedChangesIndicator
+											: null}
 									</span>
 								}
 								key={request.metadata.uuid}
