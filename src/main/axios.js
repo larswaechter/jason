@@ -1,6 +1,7 @@
-import { create } from 'axios';
+const { create } = require('axios');
+const { stringify } = require('circular-json');
 
-export class AxiosService {
+class AxiosService {
 	constructor() {
 		this.axios = create();
 		this.axios.interceptors.response.use(this.interceptResponse);
@@ -90,9 +91,11 @@ export class AxiosService {
 				params: paramsPrepared,
 				data,
 				headers: headersPrepared,
-				validateStatus: () => true, // Prevent error throwing
+				validateStatus: () => true, // Prevent 500 status error throwing
 				transformRequest: this.transformRequest
 			})
-			.then((res) => res);
+			.then((res) => JSON.parse(stringify(res)));
 	}
 }
+
+module.exports = AxiosService;

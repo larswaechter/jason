@@ -8,6 +8,7 @@ import './App.scss';
 import Requests from './containers/Requests';
 import NavigationSidebar from './containers/Sidebar';
 import NavigationHeader from 'components/Navigation/Header';
+import ModalsWelcome from 'components/Modals/Welcome';
 
 const { Content } = Layout;
 
@@ -26,6 +27,7 @@ const App = () => {
 				<Layout style={{ marginLeft: margin, transition: 'all 0.2s' }}>
 					<Content style={{ background: 'white' }}>
 						<NavigationHeader />
+						<ModalsWelcome />
 						<div className="site-layout-content">
 							<Requests />
 						</div>

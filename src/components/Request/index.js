@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Typography, Divider, message } from 'antd';
 import { v4 as uuid } from 'uuid';
 
-import { AxiosService } from '../../services/axios';
 import RequestService from '../../services/request';
+
+import { sendRequest as sendServerRequest } from '../../utils/electron.api';
 
 import { appendHistory } from '../../constants/action-types';
 
@@ -21,7 +22,6 @@ class Request extends Component {
 		super(props);
 
 		this.state = {
-			axios: new AxiosService(),
 			isLoading: false
 		};
 	}
@@ -105,8 +105,7 @@ class Request extends Component {
 		this.setState({ isLoading: true }, () => {
 			let newResponse = RequestService.createEmptyResponse({ startTime });
 
-			axios
-				.sendRequest(context)
+			sendServerRequest(context)
 				.then((res) => {
 					newResponse = {
 						...newResponse,
@@ -131,6 +130,7 @@ class Request extends Component {
 
 					if (newResponse.error) {
 						message.error('Request failed!');
+						console.log(newResponse.error);
 					} else if (newResponse.result) {
 						message.success(`Request finished in ${duration} ms!`);
 					}

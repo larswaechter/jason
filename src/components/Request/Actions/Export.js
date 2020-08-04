@@ -8,13 +8,9 @@ const RequestActionsExport = (props) => {
 	const { request } = props;
 
 	const handleExport = () => {
-		exportRequest(request, (err) => {
-			if (err) {
-				message.error(err.message);
-			} else {
-				message.success('Request exported!');
-			}
-		});
+		exportRequest(request)
+			.then(() => message.success('Request exported!'))
+			.catch((err) => message.error(err.message));
 	};
 
 	return (

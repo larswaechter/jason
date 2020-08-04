@@ -50,7 +50,7 @@ const requests = (state = initialState, action) => {
 			};
 
 		case REMOVE_REQUEST:
-			const requestID = action.id;
+			const requestID = action.uuid;
 
 			const requestIdxActive = state.requests.findIndex(
 				(request) => request.metadata.uuid === state.activeRequest
@@ -94,7 +94,7 @@ const requests = (state = initialState, action) => {
 			const requests = [...state.requests];
 
 			const requestIdxToUpdate = state.requests.findIndex(
-				(request) => request.metadata.uuid === action.id
+				(request) => request.metadata.uuid === action.uuid
 			);
 
 			requests[requestIdxToUpdate] = action.request;
@@ -108,7 +108,7 @@ const requests = (state = initialState, action) => {
 		case SET_ACTIVE_REQUEST:
 			return {
 				...state,
-				activeRequest: action.id
+				activeRequest: action.uuid
 			};
 
 		default:

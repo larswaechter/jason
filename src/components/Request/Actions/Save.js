@@ -49,8 +49,6 @@ const RequestActionsSave = (props) => {
 		message.info('Request unsaved!');
 	};
 
-	console.log(metadata);
-
 	if (isSaved) {
 		return (
 			<div>

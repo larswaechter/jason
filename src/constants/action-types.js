@@ -17,20 +17,20 @@ export const addRequest = (request = RequestService.createRequest()) => ({
 	request
 });
 
-export const removeRequest = (id) => ({
+export const removeRequest = (uuid) => ({
 	type: REMOVE_REQUEST,
-	id
+	uuid
 });
 
-export const updateRequest = (id, request) => ({
+export const updateRequest = (uuid, request) => ({
 	type: UPDATE_REQUEST,
-	id,
+	uuid,
 	request
 });
 
-export const setActiveRequest = (id) => ({
+export const setActiveRequest = (uuid) => ({
 	type: SET_ACTIVE_REQUEST,
-	id
+	uuid
 });
 
 // Saved requests and history

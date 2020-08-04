@@ -15,9 +15,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	addRequest: (request) => dispatch(addRequest(request)),
-	removeRequest: (id) => dispatch(removeRequest(id)),
-	updateRequest: (id, request) => dispatch(updateRequest(id, request)),
-	setActiveRequest: (id) => dispatch(setActiveRequest(id))
+	removeRequest: (uuid) => dispatch(removeRequest(uuid)),
+	updateRequest: (uuid, request) => dispatch(updateRequest(uuid, request)),
+	setActiveRequest: (uuid) => dispatch(setActiveRequest(uuid))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requests);

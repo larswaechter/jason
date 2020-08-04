@@ -8,10 +8,11 @@ const remote = window.require('electron').remote.require('./remote');
 const electronStore = window.require('electron').remote.getGlobal('electronStore');
 
 // Reference to remote methods used for interactions between main and render process
-export const { importRequest, exportRequest, exportResponseBody } = remote;
+export const { sendRequest, importRequest, exportRequest, exportResponseBody } = remote;
 
 /**
  * Get saved requests from electron store
+ *
  * @returns {array} Saved requests
  */
 export const getSavedRequests = () => {
@@ -20,6 +21,7 @@ export const getSavedRequests = () => {
 
 /**
  * Set saved requests to electron store
+ *
  * @param {array} requests
  * @returns {array} Saved requests
  */
@@ -30,6 +32,7 @@ export const setSavedRequests = (requests) => {
 
 /**
  * Add saved request to electron store
+ *
  * @param {Object} request
  * @returns {array} Saved requests
  */
@@ -59,6 +62,7 @@ export const addSavedRequest = (request) => {
 
 /**
  * Check if request is saved
+ *
  * @param {string} uuid - UUID of the request
  * @returns {boolean} If request is saved
  */
@@ -68,6 +72,7 @@ export const isSavedRequest = (uuid) => {
 
 /**
  * Remove saved request from electron store
+ *
  * @param {string} uuid - UUID of the request
  * @returns {array} Saved requests
  */
@@ -78,6 +83,7 @@ export const removeSavedRequest = (uuid) => {
 
 /**
  * Get requests history from electron store
+ *
  * @returns {array} Request history
  */
 export const getRequestsHistory = () => {
@@ -86,6 +92,7 @@ export const getRequestsHistory = () => {
 
 /**
  * Set requests history to electron store
+ *
  * @param {array} history
  * @returns {array} Requests history
  */
@@ -96,6 +103,7 @@ export const setRequestHistory = (history) => {
 
 /**
  * Append request to requests history in electron store
+ *
  * @param {Object} request
  * @returns {array} Requests history
  */

@@ -8,14 +8,12 @@ const RequestActionsImport = (props) => {
 	const { importRequest } = props;
 
 	const handleImport = () => {
-		fsImportRequest((err, request) => {
-			if (err) {
-				message.error(err.message);
-			} else {
+		fsImportRequest()
+			.then((request) => {
 				importRequest(request);
 				message.success('Request imported!');
-			}
-		});
+			})
+			.catch((err) => message.error(err.message));
 	};
 
 	return (

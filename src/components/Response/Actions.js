@@ -20,13 +20,9 @@ const ResponseActions = (props) => {
 	const handleExport = () => {
 		const { extension } = result;
 
-		exportResponseBody(request, HelperService.prettyPrint(result.data, extension), (err) => {
-			if (err) {
-				message.error(err.message);
-			} else {
-				message.success('Response body exported!');
-			}
-		});
+		exportResponseBody(request, HelperService.prettyPrint(result.data, extension))
+			.then(() => message.success('Response body exported!'))
+			.catch((err) => message.error(err.message));
 	};
 
 	const copyToClipboard = () => {
