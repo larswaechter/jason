@@ -4,6 +4,7 @@ const Store = require('electron-store');
 const electronStore = new Store({
 	name: 'jason'
 });
+
 global.electronStore = electronStore;
 
 function createWindow() {

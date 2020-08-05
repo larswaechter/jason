@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
+
+import { setFirstVisit, isFirstVisit } from '../../utils/electron.api';
 
 const ModalsWelcome = () => {
-	// TODO: Set true
-	const [showModal, setShowModal] = useState(false);
+	const [showModal, setShowModal] = useState(isFirstVisit());
 
 	const closeModal = () => {
 		setShowModal(false);
+		// setFirstVisit();
 	};
 
 	return (
 		<div className="ModalsWelcome">
 			<Modal title="Welcome to Jason!" visible={showModal} onCancel={closeModal} footer={null}>
-				<p>Shortcuts ...</p>
+				<p>WIP</p>
 			</Modal>
 		</div>
 	);
