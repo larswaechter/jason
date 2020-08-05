@@ -1,15 +1,22 @@
 import React from 'react';
-
 import { Tabs } from 'antd';
 
 import Request from './Request/';
 import RequestCreate from './Request/Create';
 
+const { ipcRenderer } = window.require('electron');
+
 const { TabPane } = Tabs;
 
 class Requests extends React.Component {
 	componentDidMount = () => {
+		const { addRequest } = this.props;
+
 		window.addEventListener('keydown', this.handleKeyDown);
+
+		ipcRenderer.on('add-request', () => {
+			addRequest();
+		});
 	};
 
 	componentWillUnmount() {

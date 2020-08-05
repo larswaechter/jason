@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const Store = require('electron-store');
 
 const electronStore = new Store({
@@ -17,7 +17,48 @@ function createWindow() {
 		}
 	});
 
-	mainWindow.setMenuBarVisibility(false);
+	const menuTemplate = [
+		{
+			label: 'Jason',
+			submenu: [
+				{ role: 'about' },
+				{ type: 'separator' },
+				{ role: 'services' },
+				{ type: 'separator' },
+				{ role: 'hide' },
+				{ role: 'hideothers' },
+				{ role: 'unhide' },
+				{ type: 'separator' },
+				{ role: 'quit' }
+			]
+		},
+		{
+			label: 'Request',
+			submenu: [
+				{
+					label: 'Add',
+					click: () => {
+						mainWindow.webContents.send('add-request');
+					}
+				},
+				{ type: 'separator' },
+				{ label: 'Clone' },
+				{ label: 'Save' },
+				{ type: 'separator' },
+				{ label: 'Import' },
+				{ label: 'Export' }
+			]
+		},
+		{
+			label: 'Help',
+			submenu: []
+		}
+	];
+
+	const menu = Menu.buildFromTemplate(menuTemplate);
+	Menu.setApplicationMenu(menu);
+
+	// mainWindow.setMenuBarVisibility(false);
 
 	// and load the index.html of the app.
 	mainWindow.loadURL('http://localhost:3000');
