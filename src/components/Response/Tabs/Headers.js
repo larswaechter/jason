@@ -43,6 +43,9 @@ const ResponseTabsHeaders = (props) => {
 		});
 	}
 
+	// sort by key
+	dataSource.sort((a, b) => (a.key < b.key ? -1 : 1));
+
 	return (
 		<div className="ResponseTabsHeaders">
 			<Input placeholder="Filter..." onChange={handleInputChange} style={{ marginBottom: 10 }} />

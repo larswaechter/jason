@@ -87,7 +87,7 @@ class Request extends Component {
 	};
 
 	sendRequest = () => {
-		const { axios, isLoading } = this.state;
+		const { isLoading } = this.state;
 		const { dispatch, id, request, updateRequest } = this.props;
 		const { metadata, context } = request;
 		const { isValid, msg } = RequestService.validateContext(context);

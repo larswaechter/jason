@@ -8,8 +8,9 @@ const { Header } = Layout;
 const NavigationHeader = () => {
 	return (
 		<div className="NavigationHeader">
-			<Header className="" style={{ padding: 0, background: '#fff' }}>
+			<Header style={{ padding: 0 }}>
 				<PageHeader
+					ghost={false}
 					className="site-page-header"
 					onBack={() => null}
 					title="Jason"

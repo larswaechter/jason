@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Layout } from 'antd';
 
-import 'antd/dist/antd.css';
-
 import './App.scss';
 
 import Requests from './containers/Requests';
