@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Table } from 'antd';
+import { Input, Table } from 'antd';
 
 const ResponseTabsHeaders = (props) => {
 	const { headers } = props;
+
+	const [headersFiltered, setHeadersFiltered] = useState(headers);
+
+	// Filter headers
+	const handleInputChange = (e) => {
+		const searchTerm = e.target.value;
+
+		if (searchTerm.length) {
+			const filtered = {};
+
+			for (let header in headers)
+				if (header.includes(searchTerm)) filtered[header] = headers[header];
+
+			setHeadersFiltered(filtered);
+		} else setHeadersFiltered(headers);
+	};
 
 	const columns = [
 		{
@@ -20,16 +36,22 @@ const ResponseTabsHeaders = (props) => {
 
 	const dataSource = [];
 
-	for (let header in headers) {
+	for (let header in headersFiltered) {
 		dataSource.push({
 			key: header,
-			value: headers[header]
+			value: headersFiltered[header]
 		});
 	}
 
 	return (
 		<div className="ResponseTabsHeaders">
-			<Table dataSource={dataSource} columns={columns} pagination={false} />
+			<Input placeholder="Filter..." onChange={handleInputChange} style={{ marginBottom: 10 }} />
+			<Table
+				dataSource={dataSource}
+				columns={columns}
+				pagination={false}
+				style={{ height: 600, overflowY: 'scroll' }}
+			/>
 		</div>
 	);
 };

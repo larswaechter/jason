@@ -29,7 +29,7 @@ export const setFirstVisit = () => {
 /**
  * Get saved requests from electron store
  *
- * @returns {array} Saved requests
+ * @returns {array} saved requests
  */
 export const getSavedRequests = () => {
 	return electronStore.get(REQUESTS.SAVED, []);
@@ -39,7 +39,7 @@ export const getSavedRequests = () => {
  * Set saved requests to electron store
  *
  * @param {array} requests - requests to save
- * @returns {array} Saved requests
+ * @returns {array} saved requests
  */
 export const setSavedRequests = (requests) => {
 	electronStore.set(REQUESTS.SAVED, requests);
@@ -50,7 +50,7 @@ export const setSavedRequests = (requests) => {
  * Add saved request to electron store
  *
  * @param {Object} request - request to save
- * @returns {array} Saved requests
+ * @returns {array} saved requests
  */
 export const addSavedRequest = (request) => {
 	const requests = getSavedRequests();
@@ -80,7 +80,7 @@ export const addSavedRequest = (request) => {
  * Check if request is saved
  *
  * @param {string} uuid - UUID of the request
- * @returns {boolean} If request is saved
+ * @returns {boolean} whether request is saved
  */
 export const isSavedRequest = (uuid) => {
 	return getSavedRequests().find((request) => request.metadata.uuid === uuid);
@@ -90,7 +90,7 @@ export const isSavedRequest = (uuid) => {
  * Remove saved request from electron store
  *
  * @param {string} uuid - UUID of the request
- * @returns {array} Saved requests
+ * @returns {array} saved requests
  */
 export const removeSavedRequest = (uuid) => {
 	const savedRequests = getSavedRequests().filter((request) => request.metadata.uuid !== uuid);
@@ -100,7 +100,7 @@ export const removeSavedRequest = (uuid) => {
 /**
  * Get requests history from electron store
  *
- * @returns {array} Request history
+ * @returns {array} request history
  */
 export const getRequestsHistory = () => {
 	return electronStore.get(REQUESTS.HISTORY, []);
@@ -110,7 +110,7 @@ export const getRequestsHistory = () => {
  * Save requests history to electron store
  *
  * @param {array} history history to save
- * @returns {array} Requests history
+ * @returns {array} requests history
  */
 export const setRequestHistory = (history) => {
 	electronStore.set(REQUESTS.HISTORY, history);
@@ -121,7 +121,7 @@ export const setRequestHistory = (history) => {
  * Append request to requests history in electron store
  *
  * @param {Object} request - request to append
- * @returns {array} Requests history
+ * @returns {array} requests history
  */
 export const appendRequestHistory = (request) => {
 	const history = getRequestsHistory();

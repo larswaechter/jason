@@ -50,6 +50,10 @@ function createWindow() {
 			]
 		},
 		{
+			label: 'View',
+			submenu: []
+		},
+		{
 			label: 'Help',
 			submenu: []
 		}
