@@ -16,6 +16,10 @@ const ModalsHelp = () => {
 		{
 			question: 'Where are the exported files saved to?',
 			answer: "Exported files are saved to your system's 'Downloads' directory"
+		},
+		{
+			question: 'How many requests does the history include?',
+			answer: 'The history includes the last ten requests'
 		}
 	];
 
