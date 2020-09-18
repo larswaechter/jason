@@ -8,14 +8,21 @@ An Electron based desktop application for sending HTTP requests. (WIP)
 
 Install the node modules:
 
-`npm install`
+```bash
+npm install
+```
 
 Start React: (close the browser window that pops up)
 
-`npm start`
-
+```bash
+npm start
+```
 Start the Electron process:
 
-`npm run electron`
+```bash
+npm run electron
+```
 
+## License
 
+jason is released under [MIT](https://github.com/larswaechter/jason/blob/master/LICENSE) license.
