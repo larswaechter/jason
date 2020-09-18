@@ -17,11 +17,21 @@ Start React: (close the browser window that pops up)
 ```bash
 npm start
 ```
+
 Start the Electron process:
 
 ```bash
 npm run electron
 ```
+
+## Features
+
+- Send HTTP requests
+  - GET, DELETE, POST, PUT, PATCH
+  - Edit Headers & Body
+- Export / import requests
+- Save requests
+- History
 
 ## License
 
