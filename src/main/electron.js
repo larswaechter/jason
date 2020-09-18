@@ -13,7 +13,8 @@ function createWindow() {
 		width: 800,
 		height: 600,
 		webPreferences: {
-			nodeIntegration: true
+			nodeIntegration: true,
+			enableRemoteModule: true
 		}
 	});
 
@@ -60,7 +61,7 @@ function createWindow() {
 	];
 
 	const menu = Menu.buildFromTemplate(menuTemplate);
-	Menu.setApplicationMenu(menu);
+	// Menu.setApplicationMenu(menu);
 
 	// mainWindow.setMenuBarVisibility(false);
 
